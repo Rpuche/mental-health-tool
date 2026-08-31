@@ -1,36 +1,161 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bridge
 
-## Getting Started
+**A free, anonymous first conversation with a qualified mental health professional — for people who have been putting it off.**
 
-First, run the development server:
+Hackathon prototype · Hack for Humanity Summer 2026 · Mental Health track
+
+---
+
+## The problem
+
+Most people who could use a conversation never have one. Not because help is
+missing, but because asking for it still feels like an admission: that you
+could not cope on your own, that something is wrong with you, that it will
+follow you around in a file or a diagnosis. So it gets postponed — until it is
+"bad enough", until there is time, until it passes by itself.
+
+The hardest part is not the therapy. It is the first step.
+
+## The idea
+
+Bridge removes everything that makes that first step expensive. You start by
+talking to **Kawauso**, an otter and the guide of the platform, in an anonymous
+chat: no account, no real name, nothing recorded about you.
+
+1. **Kawauso listens.** It asks a few open questions, one at a time, until it
+   understands what is actually going on. It never rushes to a conclusion.
+2. **It points to one field** — anxiety, sleep, grief, work, and so on — and
+   explains why it fits. That is an orientation, never a diagnosis.
+3. **You see the professionals** who work in that field: role, languages, city,
+   practice.
+4. **You book a slot** and join an **anonymous session room** — a video/audio
+   call that needs no account and no name.
+
+The first phone conversation is free and anonymous. Only afterwards, and only
+if you want to continue, do you register with your real identity for paid
+follow-up sessions.
+
+## Getting started
+
+Requires Node.js 20 or newer.
+
+```bash
+git clone <repository-url>
+cd mental-health-tool
+npm install
+```
+
+Create a `.env.local` in the project root with a Google Gemini API key
+(free tier is enough — get one at
+[aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)):
+
+```bash
+GOOGLE_API_KEY=your-key-here
+```
+
+`.env.example` exists as a template. Then:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+and open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Without a key the app still runs — every page renders, only Kawauso's replies
+return a clear error.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Other scripts: `npm run build` (production build, also type-checks) and
+`npm run lint`.
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+  page.tsx                    Splash — the wordmark, one tap to continue
+  start/page.tsx              "The First Step" — what this is, in two paragraphs
+  hub/page.tsx                Three ways in: Why Bridge · How it works · Kawauso
+  hub/why, hub/how            The longer explanations behind the first two cards
+  kawauso/page.tsx            The anonymous chat
+  experts/[fieldId]/page.tsx  Professionals for one field, with booking + room
+  settings/page.tsx           Placeholder, no function yet
+  api/chat/route.ts           Server route to the Gemini API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+components/
+  Chat.tsx                    Chat UI, markdown rendering, field-match button
+  ExpertCard.tsx              Profile card, mock booking, Jitsi session room
+  HubShell.tsx / HubCard.tsx  Shared frame and cards for the hub
+  AmbientBackground.tsx       Slow gradient fields behind the glass surfaces
+  RichText.tsx                Small markdown renderer (bold, italic, lists)
+  OtterIcon.tsx / Icons.tsx   Line illustrations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+lib/
+  characters.ts               Kawauso's metadata (client-safe, no prompt)
+  prompts.ts                  The system prompt — server-side only
+  experts.ts                  Fields and example professionals
+  fieldMatch.ts               Parses Kawauso's field marker
+  types.ts                    Chat message and API types
+```
 
-## Deploy on Vercel
+**How the field recommendation reaches the UI:** Kawauso ends the message in
+which it settles on a field with a marker, `[[FIELD_MATCH:stress-work-burnout]]`.
+The API route strips the marker from the visible text, validates the ID against
+`lib/experts.ts`, and returns it as structured data. The chat then shows a
+button to that field's professionals. An invented ID is discarded, so a
+hallucinated field never becomes a broken link.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Safety design
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This is a mental health context, so several decisions are deliberate rather
+than incidental:
+
+- **No diagnoses.** Kawauso places a concern in a *field* and says so
+  explicitly. It is instructed never to name a disorder or an illness, and to
+  answer "do I have X?" by saying that this is not its role.
+- **Crisis handling.** If there are signs of an acute crisis or risk of
+  self-harm, Kawauso names it calmly and points to immediate help: emergency
+  **112** and the Swiss crisis line **Die Dargebotene Hand** at **143**. Those
+  numbers also sit in a footer that stays visible on every screen.
+- **Honest about what it is.** Kawauso introduces itself as an AI guide, not a
+  professional, and never stands in for the person you will actually talk to.
+- **Real professionals.** The people behind the first call are qualified and
+  permanently employed — not trainees, not a directory of strangers, and not
+  people paid per booking.
+- **Anonymous session rooms.** Each booking gets a room name from 128 random
+  bits (`bridge-<32 hex>`), so it cannot be guessed or enumerated. The URL
+  carries no name, no field and no time. The prejoin screen is skipped, a
+  throwaway label (`Guest-7F3A`) is filled in so nobody types their own name,
+  and **camera and microphone start muted** — you turn them on yourself.
+- **Paced conversation.** Kawauso may not jump to a recommendation after a
+  single sentence: it needs a couple of genuine exchanges first, and a question
+  the person deflected does not count as one.
+
+## Prototype scope
+
+This is a hackathon prototype, not a production system. What is real, and what
+is not:
+
+| Real | Mock / placeholder |
+| --- | --- |
+| The chat with Kawauso (Gemini API) | The professional profiles — invented people |
+| Field recommendation and matching | The bookable time slots — static data |
+| The session room (public Jitsi Meet) | Booking is not stored anywhere and notifies nobody |
+| Crisis references and safety prompting | Registration, payment and the settings page |
+
+The app says so where it matters: profile pages label the profiles as examples,
+and a booking confirmation states plainly that nothing was booked.
+
+Two things a production version would need first: the session rooms run on the
+public `meet.jit.si` instance, so audio and video pass through third-party
+servers — a self-hosted Jitsi or JaaS would be required. And the professional
+starts the room as moderator, which is the intended flow, but means a
+single-person demo waits on the "not started yet" screen.
+
+## Tech stack
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 ·
+Google Gemini via `@google/genai` · Jitsi Meet for the session rooms.
+
+The interface is a single dark, frosted-glass look over a deep teal and indigo
+palette. Text contrast was measured against the rendered background rather than
+estimated — 55 text elements across seven views, all above WCAG AA. All motion
+is disabled under `prefers-reduced-motion`.
