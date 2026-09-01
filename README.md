@@ -35,6 +35,34 @@ The first phone conversation is free and anonymous. Only afterwards, and only
 if you want to continue, do you register with your real identity for paid
 follow-up sessions.
 
+## Who this is for
+
+**On the user side:** people who could benefit from talking to a professional
+but avoid it — out of fear of being judged, because of the stigma still
+attached to it, or from a conviction that it would not help anyway. That is a
+broad group. It is not tied to a particular diagnosis, age or background, and
+you do not have to consider yourself unwell to belong to it.
+
+**On the professional side:** qualified, licensed psychologists in a permanent
+employment position, including those who have just started their first post and
+are still building a client base — not students or trainees without a licence.
+For them, Bridge is flexible additional availability, and a way to reach people
+who would otherwise rarely find their way into a regular practice.
+
+## Related work
+
+Neither half of this is new on its own. AI-driven intake and matching already
+exists: Limbic Access is used for referral and triage in clinical and NHS
+settings, and chatbot templates for intake in existing practices are widely
+available commercially. Free, anonymous emotional support also exists — 7 Cups
+and HearMe connect people with trained volunteer listeners at no cost and
+without an account.
+
+What does not appear to exist yet as a public consumer product is the
+combination: genuine end-to-end anonymity carried through to a routed
+conversation with a real, licensed, employed professional, in a single free
+first call.
+
 ## Getting started
 
 Requires Node.js 20 or newer.
