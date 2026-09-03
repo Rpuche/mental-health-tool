@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import ExpertCard from "@/components/ExpertCard";
+import ExpertList from "@/components/ExpertList";
 import HubShell from "@/components/HubShell";
 import { EXPERTS, FIELDS, getField } from "@/lib/experts";
 
@@ -39,12 +39,23 @@ export default async function ExpertsPage({
   return (
     <HubShell centered={false}>
       <div className="animate-[fade-up_0.6s_ease-out]">
-        <Link
-          href="/kawauso"
-          className="inline-block rounded-full px-3 py-2 text-sm text-teal-50/72 transition hover:bg-white/5 hover:text-teal-50"
-        >
-          &larr; Back to the conversation
-        </Link>
+        <div className="flex flex-wrap items-center gap-1 text-sm">
+          <Link
+            href="/kawauso"
+            className="press rounded-full px-3 py-2 text-teal-50/72 hover:bg-white/10 hover:text-teal-50"
+          >
+            &larr; Back to the conversation
+          </Link>
+          <span aria-hidden="true" className="text-teal-50/35">
+            &middot;
+          </span>
+          <Link
+            href="/experts"
+            className="press rounded-full px-3 py-2 text-teal-50/72 hover:bg-white/10 hover:text-teal-50"
+          >
+            All fields
+          </Link>
+        </div>
 
         <header className="mt-5 max-w-2xl">
           <p className="text-sm tracking-widest text-teal-50/65 uppercase">
@@ -60,10 +71,8 @@ export default async function ExpertsPage({
           </p>
         </header>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-5">
-          {experts.map((expert, index) => (
-            <ExpertCard key={expert.name} expert={expert} index={index} />
-          ))}
+        <div className="mt-8">
+          <ExpertList experts={experts} />
         </div>
 
         <p className="mt-8 text-xs text-teal-50/65">

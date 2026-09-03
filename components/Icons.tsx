@@ -39,6 +39,18 @@ export function RouteIcon({ className = "" }: IconProps) {
   );
 }
 
+/** Browsing a directory — four cards in a grid. */
+export function GridIcon({ className = "" }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <rect x="20" y="20" width="36" height="36" rx="9" />
+      <rect x="64" y="20" width="36" height="36" rx="9" />
+      <rect x="20" y="64" width="36" height="36" rx="9" />
+      <rect x="64" y="64" width="36" height="36" rx="9" />
+    </svg>
+  );
+}
+
 /** Down arrow for the splash hint. */
 export function ChevronDownIcon({ className = "" }: IconProps) {
   return (

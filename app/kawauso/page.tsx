@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import Chat from "@/components/Chat";
+import { GridIcon } from "@/components/Icons";
 import Navbar from "@/components/Navbar";
 import OtterIcon from "@/components/OtterIcon";
 import { KAWAUSO } from "@/lib/characters";
@@ -44,10 +45,38 @@ export default function KawausoPage() {
           <Chat />
         </div>
 
-        <p className="pb-2 text-center text-xs text-teal-50/65">
+        <p className="text-center text-xs text-teal-50/65">
           Kawauso is an AI guide, not a professional &mdash; and does not give
           diagnoses.
         </p>
+
+        {/*
+          Secondary path, deliberately quieter than the chat panel above:
+          half the padding, smaller type, muted icon. Useful when the chat is
+          unavailable or someone would rather skip ahead.
+        */}
+        <Link
+          href="/experts"
+          className="glass glass-interactive mb-2 flex items-center gap-4 rounded-2xl p-4 sm:p-5"
+        >
+          <span className="shrink-0 text-teal-200/70">
+            <GridIcon className="h-8 w-8" />
+          </span>
+
+          <span className="min-w-0">
+            <span className="block text-sm font-medium text-teal-50/90">
+              Browse professionals directly
+            </span>
+            <span className="mt-0.5 block text-xs leading-relaxed text-teal-50/65">
+              Useful if the chat is unavailable, or if you would rather skip
+              ahead and look through the fields yourself.
+            </span>
+          </span>
+
+          <span aria-hidden="true" className="ml-auto shrink-0 text-teal-50/50">
+            &rarr;
+          </span>
+        </Link>
       </main>
     </div>
   );

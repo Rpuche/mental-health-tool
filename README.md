@@ -27,9 +27,15 @@ chat: no account, no real name, nothing recorded about you.
 2. **It points to one field** — anxiety, sleep, grief, work, and so on — and
    explains why it fits. That is an orientation, never a diagnosis.
 3. **You see the professionals** who work in that field: role, languages, city,
-   practice.
+   practice. Filters for city and spoken language narrow the list.
 4. **You book a slot** and join an **anonymous session room** — a video/audio
-   call that needs no account and no name.
+   call that needs no account and no name, with camera and microphone off
+   until you turn them on.
+
+The chat is the suggested way in, but not the only one: `/experts` lists every
+field, so anyone who already knows what they are looking for — or whose chat is
+unavailable — can pick a field themselves and land on the same page of
+professionals.
 
 The first phone conversation is free and anonymous. Only afterwards, and only
 if you want to continue, do you register with your real identity for paid
@@ -104,13 +110,16 @@ app/
   hub/page.tsx                Three ways in: Why Bridge · How it works · Kawauso
   hub/why, hub/how            The longer explanations behind the first two cards
   kawauso/page.tsx            The anonymous chat
-  experts/[fieldId]/page.tsx  Professionals for one field, with booking + room
+  experts/page.tsx            All fields at a glance — the browse-first way in
+  experts/[fieldId]/page.tsx  Professionals for one field: city and language
+                              filters, mock booking, anonymous session room
   settings/page.tsx           Placeholder, no function yet
   api/chat/route.ts           Server route to the Gemini API
 
 components/
   Chat.tsx                    Chat UI, markdown rendering, field-match button
   ExpertCard.tsx              Profile card, mock booking, Jitsi session room
+  ExpertList.tsx              Profile list with city and language filters
   HubShell.tsx / HubCard.tsx  Shared frame and cards for the hub
   AmbientBackground.tsx       Slow gradient fields behind the glass surfaces
   RichText.tsx                Small markdown renderer (bold, italic, lists)

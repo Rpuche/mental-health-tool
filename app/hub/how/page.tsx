@@ -50,6 +50,20 @@ export default function HowItWorksPage() {
               text="The first phone conversation is free and anonymous — no registration, no name, nothing recorded about you. Only afterwards, and only if you want to keep going, do you sign up with your real identity for paid follow-up sessions with the same professional."
             />
           </ol>
+
+          <p className="leading-relaxed text-teal-50/80">
+            Kawauso is the way in we would suggest: it listens first and finds
+            the field that fits, so you do not have to know the answer in
+            advance. If you already know what you are looking for, or would
+            rather look around on your own, you can also{" "}
+            <Link
+              href="/experts"
+              className="text-teal-50 underline-offset-4 hover:underline"
+            >
+              browse all fields directly
+            </Link>{" "}
+            and pick one yourself.
+          </p>
         </section>
       </div>
     </HubShell>
