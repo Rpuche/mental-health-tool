@@ -119,7 +119,7 @@ export const EXPERTS: Record<FieldId, Expert[]> = {
   ],
   "stress-work-burnout": [
     {
-      name: "Nina Roth",
+      name: "Feliciano Rüegg",
       role: "Psychologist FSP",
       languages: "German, English",
       city: "Zurich",
@@ -127,7 +127,7 @@ export const EXPERTS: Record<FieldId, Expert[]> = {
       note: "Works with exhaustion, pressure and boundaries at work.",
     },
     {
-      name: "Tobias Lang",
+      name: "Reyna Locher",
       role: "Coach & psychotherapist",
       languages: "German",
       city: "Zug",
@@ -137,7 +137,7 @@ export const EXPERTS: Record<FieldId, Expert[]> = {
   ],
   "relationships-family": [
     {
-      name: "Elena Vogt",
+      name: "Lorena Wyss",
       role: "Couples and family therapist",
       languages: "German, English",
       city: "Basel",
@@ -173,7 +173,7 @@ export const EXPERTS: Record<FieldId, Expert[]> = {
   ],
   sleep: [
     {
-      name: "Anja Keller",
+      name: "Raoul Brand",
       role: "Psychologist FSP",
       languages: "German, English",
       city: "Zurich",
@@ -181,7 +181,7 @@ export const EXPERTS: Record<FieldId, Expert[]> = {
       note: "Focuses on sleeplessness and night-time rumination.",
     },
     {
-      name: "Samuel Iten",
+      name: "Romina Suter",
       role: "Psychotherapist",
       languages: "German, French",
       city: "Biel/Bienne",
