@@ -187,6 +187,18 @@ servers — a self-hosted Jitsi or JaaS would be required. And the professional
 starts the room as moderator, which is the intended flow, but means a
 single-person demo waits on the "not started yet" screen.
 
+**Verifying the professionals.** The prototype does not check anyone's
+credentials — the profiles are invented, so there is nothing to verify. A real
+version could check a registration number against an official register
+(PsyReg in Switzerland), verify an employer email domain, use a third-party
+identity service such as Persona or Onfido, or review submitted documents by
+hand. A registry check combined with a manual review before a profile goes
+live would be the preferred starting point: a public professional register is
+the most authoritative and directly verifiable source of licensure,
+third-party identity verification is comparatively costly to run continuously,
+and a light manual review closes the gap a registry alone cannot cover —
+whether the person is currently employed.
+
 ## Tech stack
 
 Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 ·
